@@ -1,0 +1,28 @@
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Eclipse project files
+.classpath
+.project
+
+# Intellij project files
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Include IntelliJ Copyright Profile
+!/.idea/copyright/
+
+# Gradle
+.gradletasknamecache
+.gradle/
+build/
+bin/

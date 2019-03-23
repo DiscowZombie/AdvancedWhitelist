@@ -1,0 +1,59 @@
+/*
+ *     AdvancedWhitelist - An advanced whitelist plugin for Sponge and Spigot
+ *     Copyright (C) 2019  Mathéo CIMBARO
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+plugins {
+    id 'org.spongepowered.plugin' version '0.8.1'
+}
+
+group = pluginGroup
+version = pluginVersion
+
+repositories {
+    mavenLocal()
+
+    // PaperMc repo
+    maven {
+        url = "https://papermc.io/repo/repository/maven-public/"
+    }
+}
+
+dependencies {
+    // == SpongeAPI == //
+    compile 'org.spongepowered:spongeapi:7.0.0'
+
+    // == PaperAPI == //
+    compileOnly 'com.destroystokyo.paper:paper-api:1.13.2-R0.1-SNAPSHOT'
+
+    // == HIKARI CP POOL == //
+    compile 'com.zaxxer:HikariCP:3.3.1'
+}
+
+sponge.plugin.id = pluginId
+
+task buildFullJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'net.iseros.iseroskapi.IserosAPIKt'
+    }
+    baseName = project.name + '-full'
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    with jar
+}

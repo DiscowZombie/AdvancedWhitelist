@@ -1,0 +1,3 @@
+database:
+  driver: "h2"
+  file: "./database"
