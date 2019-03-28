@@ -66,9 +66,7 @@ public class AdvancedWhitelistSponge {
     public void onServerAboutToStart(GameAboutToStartServerEvent event) throws IOException {
         final Path potentialFile = new File("./config/advancedwhitelist/config.yml").toPath();
         @SuppressWarnings("OptionalGetWithoutIsPresent") final YAMLConfigurationLoader loader = YAMLConfigurationLoader.builder()
-                .setURL(
-                        Sponge.getAssetManager().getAsset("assets/advancedwhitelist/config.yml").get().getUrl()
-                )
+                .setURL(Sponge.getAssetManager().getAsset("assets/advancedwhitelist/config.yml").get().getUrl())
                 .setPath(potentialFile)
                 .build();
         final ConfigurationNode node = loader.createEmptyNode(ConfigurationOptions.defaults());

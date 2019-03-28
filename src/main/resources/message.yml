@@ -1,0 +1,6 @@
+command:
+  command:
+    group:
+      list:
+        head: "There are %s groups available:"
+        line: "%s - %s"

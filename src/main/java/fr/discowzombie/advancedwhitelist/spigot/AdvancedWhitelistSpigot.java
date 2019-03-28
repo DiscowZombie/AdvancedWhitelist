@@ -86,7 +86,6 @@ public class AdvancedWhitelistSpigot extends JavaPlugin {
 
             AdvancedWhitelistService.awaitReady(new DatabaseBackward(provider));
 
-
             this.logger.info("Database has been setup successfully!");
         }).exceptionally(exc -> {
             this.logger.fine(String.format("Internal error: %s", exc.getMessage()));

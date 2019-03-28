@@ -18,6 +18,8 @@
 
 package fr.discowzombie.advancedwhitelist.sponge.command;
 
+import fr.discowzombie.advancedwhitelist.common.message.Message;
+import fr.discowzombie.advancedwhitelist.common.message.Replacer;
 import fr.discowzombie.advancedwhitelist.common.service.AdvancedWhitelistService;
 import fr.discowzombie.advancedwhitelist.common.service.WhitelistGroup;
 import org.spongepowered.api.command.CommandException;
@@ -30,12 +32,19 @@ import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.text.LiteralText;
 import org.spongepowered.api.text.Text;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 @SuppressWarnings("ALL")
-public class AdvancedWhitelistCommand {
+public final class AdvancedWhitelistCommand {
 
-        /*
+    public static final CommandSpec advancedWhitelist = CommandSpec.builder()
+            .child(Group.COMMAND_SPEC, "group")
+            .child(Server.COMMAND_SPEC, "server")
+            .build();
+    private static Message message;
+
+    /*
         advancedwhitelist (awl) :
             group
                 list
@@ -50,13 +59,11 @@ public class AdvancedWhitelistCommand {
                 list
             help (auto-generated)
          */
-
-    public static final CommandSpec advancedWhitelist = CommandSpec.builder()
-            .child(Group.COMMAND_SPEC, "group")
-            .child(Server.COMMAND_SPEC, "server")
-            .build();
-
     private static AdvancedWhitelistService whitelistService = new AdvancedWhitelistService();
+
+    public AdvancedWhitelistCommand(final Message message) {
+        this.message = message;
+    }
 
     private static class Group {
 
@@ -74,16 +81,21 @@ public class AdvancedWhitelistCommand {
                     .build();
 
             @Override
-            public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+            public CommandResult execute(final CommandSource src, final CommandContext args) throws CommandException {
                 Text.Builder builder = Text.builder();
-                builder.append(Text.of(String.format(
-                        "There are %s groups available: ", whitelistService.getGroups().size())
+                builder.append(Text.of(
+                        message.getMessageSafe(Message.MessagePath.COMMAND_GROUP_LIST_HEAD.getPath(), Arrays.asList(
+                                new Replacer("%s", String.format("%s", whitelistService.getGroups().size()), 1)
+                        ))
                 ));
 
                 for (WhitelistGroup group : whitelistService.getGroups()) {
-                    LiteralText subText = Text.of(String.format(
-                            "%s - %s", group.getName(), group.getDescription()
-                    ));
+                    LiteralText subText = Text.of(
+                            message.getMessageSafe(Message.MessagePath.COMMAND_GROUP_LIST_LINE.getPath(), Arrays.asList(
+                                    new Replacer("%s", group.getName(), 1),
+                                    new Replacer("%s", group.getDescription(), 1)
+                            ))
+                    );
 
                     builder.append(subText);
                 }
@@ -100,7 +112,7 @@ public class AdvancedWhitelistCommand {
                     .build();
 
             @Override
-            public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+            public CommandResult execute(final CommandSource src, final CommandContext args) throws CommandException {
                 return CommandResult.success();
             }
         }
@@ -112,7 +124,7 @@ public class AdvancedWhitelistCommand {
                     .build();
 
             @Override
-            public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+            public CommandResult execute(final CommandSource src, final CommandContext args) throws CommandException {
                 return CommandResult.success();
             }
         }
@@ -132,7 +144,7 @@ public class AdvancedWhitelistCommand {
                         .build();
 
                 @Override
-                public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+                public CommandResult execute(final CommandSource src, final CommandContext args) throws CommandException {
                     return CommandResult.success();
                 }
 
@@ -152,7 +164,7 @@ public class AdvancedWhitelistCommand {
                         .build();
 
                 @Override
-                public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+                public CommandResult execute(final CommandSource src, final CommandContext args) throws CommandException {
                     return CommandResult.success();
                 }
 
@@ -165,7 +177,7 @@ public class AdvancedWhitelistCommand {
                         .build();
 
                 @Override
-                public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+                public CommandResult execute(final CommandSource src, final CommandContext args) throws CommandException {
                     return CommandResult.success();
                 }
 
@@ -189,7 +201,7 @@ public class AdvancedWhitelistCommand {
                     .build();
 
             @Override
-            public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+            public CommandResult execute(final CommandSource src, final CommandContext args) throws CommandException {
                 return CommandResult.success();
             }
         }
@@ -201,7 +213,7 @@ public class AdvancedWhitelistCommand {
                     .build();
 
             @Override
-            public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+            public CommandResult execute(final CommandSource src, final CommandContext args) throws CommandException {
                 return CommandResult.success();
             }
         }
